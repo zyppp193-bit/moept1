@@ -220,7 +220,12 @@ class Parser:
         # MMKD with a better alpha search
         parser.add_argument('--alpha-min', type=float, default=0.01)
         parser.add_argument('--alpha-max', type=float, default=0.01)
-        parser.add_argument('--n-teacher', type=int, default=1)
+        parser.add_argument('--n-teacher', type=int, default=4)
+        parser.add_argument('--moe-top-k', type=int, default=1, help="Number of EMA experts routed by the ViT gate.")
+        parser.add_argument('--moe-beta', type=float, default=0.5, help="Weight for pretrained ViT logits when mixing with MoE outputs.")
+        parser.add_argument('--vit-teacher', type=str, default='vit_base_patch16_224_in21k', help="Pretrained ViT backbone used for gating and distillation.")
+        parser.add_argument('--vit-teacher-weights', type=str, default=None, help="Local path to pretrained ViT weights to avoid online downloads.")
+        parser.add_argument('--vit-pretrained-strict', action='store_true', help="If set, raise an error when pretrained ViT weights cannot be loaded (no random init fallback).")
         # SDP params
         parser.add_argument('--sdp-mu', type=int, default=100)
         parser.add_argument('--sdp-c2', type=float, default=0.75)
